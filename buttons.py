@@ -21,7 +21,6 @@ def lacation_button():
 
 def main_menu():
     kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-
     button1 = KeyboardButton('Категории одежды 🛍')
     button2 = KeyboardButton('Корзина 🛒')
     button3 = KeyboardButton('История покупок 🕒')
@@ -140,6 +139,7 @@ def basket_button():
     return kb
 
 
+
 # Оформление заказа
 def confirm_order_button():
     kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -155,10 +155,11 @@ def confirm_order_button():
 def confirm_clear_button():
     kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
 
-    confirm = KeyboardButton('Да ✅')
-    cancel = KeyboardButton('Нет ❌')
+    confirm = KeyboardButton('Да ✅.')
+    cancel = KeyboardButton('Нет ❌.')
 
     kb.row(cancel, confirm)
 
     return kb
+
 

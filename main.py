@@ -32,6 +32,8 @@ def get_contact(message):
 
         database.register_user(telegram_id, first_name, phone_number)
 
+
+###
         bot.send_message(telegram_id, 'Вы успешно зарегистрировались, выберите пункт в меню', reply_markup=buttons.main_menu()) # menu button
 
     else:
