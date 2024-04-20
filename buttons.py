@@ -1,6 +1,3 @@
-from telebot.types import ReplyKeyboardMarkup, KeyboardButton
-import database
-
 def contact_button():
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
 
