@@ -5,10 +5,10 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import database
 import buttons
 
-TOKEN = '6579478804:AAHx0HKe0GFmd3MN8WbldHr1Ir4tG7uUTqY'
+TOKEN = 'Your Bot token'
 bot = telebot.TeleBot(TOKEN, threaded=False)
 
-adminnn = 6833700546
+adminnn = #Your_user.id
 
 #hello
 @bot.message_handler(commands=['start'])
@@ -376,80 +376,80 @@ def get_message(message, pr_name, category):
         bot.register_next_step_handler(message, get_count, pr_name, category)
 
 
-def get_count(message, pr_name, category):
-    count = message.text
-
-    if count == 'Назад ⬅️':
-        bot.send_message(message.from_user.id, f'Вы вернулись назад в: {category}', reply_markup=buttons.get_ptoducts_by_category_button(category))
-        bot.register_next_step_handler(message, product_name, category)
-
-    elif count.isdigit():
-        count = int(message.text)
-
-        database.add_product_to_cart(message.from_user.id, pr_name, count)
-
-        bot.send_message(message.from_user.id, 'Товар добавлен в корзину!', reply_markup=buttons.get_ptoducts_by_category_button(category))
-        bot.register_next_step_handler(message, product_name, category)
-
-    else:
-        bot.send_message(message.from_user.id, 'Введите только кол-во, например: 1')
-        bot.register_next_step_handler(message, get_count, pr_name, category)
-
-
-
-def get_accept(message):
-    user_id = message.from_user.id
-
-    if message.text == 'Потвердить ✅':
-        user_products = database.get_user_cart(user_id)
-        user_data = database.get_user_data(user_id)
-
-        full_order_message = 'Ваш заказ:\n\n'
-        full_admin_message = f'Имя: {user_data[0]}\nНомер телефон: {user_data[1]}\n\n'
-        total_sum = 0
-
-        for order in user_products:
-            # Для пользователя
-            full_order_message += f'Товар: {order[0]} : {order[1]}шт : {order[-1]}сум\n'
-            #  Для админа
-            full_admin_message += f'{order[0]} : {order[1]}шт : {order[-1]}сум\n'
-            # Подсчет общей суммы
-            total_sum += order[-1]
-
-        full_order_message += f'\nИтог: {total_sum} сум\n\nВаш заказ оформлен!'  # Для пользователя
-        full_admin_message += f'\nИтог: {total_sum} сум'  # Для админа
-        database.add_order(user_id, order[0], order[1], order[-1])
-        bot.send_location(user_id, latitude, longitude)
-        bot.send_message(user_id, full_order_message)
-        bot.send_message(6833700546, full_admin_message)
-        bot.send_location(6833700546, latitude, longitude)
-        bot.send_message(6833700546, "По адресу")
-  
-
-        database.clear_user_cart(user_id)
-        
-        kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-
-        btn_1 = KeyboardButton('Забрать самому')
-        
-        btn_2 = KeyboardButton('Яндекс доставка')
-        btn_3 = KeyboardButton('назад')
-
-        kb.row(btn_1, btn_2, btn_3)
-
-        bot.send_message(message.from_user.id, "Вы забираете товар сами или вам нужна доставка?", reply_markup=kb)
-
-    elif message.text == 'Да ✅.':
-        database.clear_user_cart(message.from_user.id)
-        bot.send_message(user_id, 'корзина очищена', reply_markup=buttons.main_menu())
-    elif message.text == 'Нет ❌.':
-        bot.send_message(user_id, 'Действие отменено', reply_markup=buttons.main_menu())
-    
-
-    else:
-        bot.send_message(user_id, 'Заказ отменен', reply_markup=buttons.main_menu())
-        
-        
+# def get_count(message, pr_name, category):
+#     count = message.text
+#
+#     if count == 'Назад ⬅️':
+#         bot.send_message(message.from_user.id, f'Вы вернулись назад в: {category}', reply_markup=buttons.get_ptoducts_by_category_button(category))
+#         bot.register_next_step_handler(message, product_name, category)
+#
+#     elif count.isdigit():
+#         count = int(message.text)
+#
+#         database.add_product_to_cart(message.from_user.id, pr_name, count)
+#
+#         bot.send_message(message.from_user.id, 'Товар добавлен в корзину!', reply_markup=buttons.get_ptoducts_by_category_button(category))
+#         bot.register_next_step_handler(message, product_name, category)
+#
+#     else:
+#         bot.send_message(message.from_user.id, 'Введите только кол-во, например: 1')
+#         bot.register_next_step_handler(message, get_count, pr_name, category)
+#
+#
+#
+# def get_accept(message):
+#     user_id = message.from_user.id
+#
+#     if message.text == 'Потвердить ✅':
+#         user_products = database.get_user_cart(user_id)
+#         user_data = database.get_user_data(user_id)
+#
+#         full_order_message = 'Ваш заказ:\n\n'
+#         full_admin_message = f'Имя: {user_data[0]}\nНомер телефон: {user_data[1]}\n\n'
+#         total_sum = 0
+#
+#         for order in user_products:
+#             # Для пользователя
+#             full_order_message += f'Товар: {order[0]} : {order[1]}шт : {order[-1]}сум\n'
+#             #  Для админа
+#             full_admin_message += f'{order[0]} : {order[1]}шт : {order[-1]}сум\n'
+#             # Подсчет общей суммы
+#             total_sum += order[-1]
+#
+#         full_order_message += f'\nИтог: {total_sum} сум\n\nВаш заказ оформлен!'  # Для пользователя
+#         full_admin_message += f'\nИтог: {total_sum} сум'  # Для админа
+#         database.add_order(user_id, order[0], order[1], order[-1])
+#         bot.send_location(user_id, latitude, longitude)
+#         bot.send_message(user_id, full_order_message)
+#         bot.send_message(6833700546, full_admin_message)
+#         bot.send_location(6833700546, latitude, longitude)
+#         bot.send_message(6833700546, "По адресу")
+#
+#
+#         database.clear_user_cart(user_id)
+#
+#         kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+#
+#         btn_1 = KeyboardButton('Забрать самому')
+#
+#         btn_2 = KeyboardButton('Яндекс доставка')
+#         btn_3 = KeyboardButton('назад')
+#
+#         kb.row(btn_1, btn_2, btn_3)
+#
+#         bot.send_message(message.from_user.id, "Вы забираете товар сами или вам нужна доставка?", reply_markup=kb)
+#
+#     elif message.text == 'Да ✅.':
+#         database.clear_user_cart(message.from_user.id)
+#         bot.send_message(user_id, 'корзина очищена', reply_markup=buttons.main_menu())
+#     elif message.text == 'Нет ❌.':
+#         bot.send_message(user_id, 'Действие отменено', reply_markup=buttons.main_menu())
+#
+#
+#     else:
+#         bot.send_message(user_id, 'Заказ отменен', reply_markup=buttons.main_menu())
+#
+#
 
 
 bot.polling()
